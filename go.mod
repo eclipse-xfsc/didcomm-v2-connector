@@ -1,6 +1,7 @@
 module github.com/eclipse-xfsc/didcomm-v2-connector
 
 go 1.21.4
+toolchain go1.24.1
 
 require (
 	github.com/cloudevents/sdk-go/v2 v2.15.1
@@ -13,15 +14,15 @@ require (
 	github.com/multiformats/go-multibase v0.2.0
 	github.com/samber/slog-gin v1.9.0
 	github.com/spf13/viper v1.18.2
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
-	github.com/swaggo/swag v1.16.2
 )
 
 require (
 	github.com/IBM/sarama v1.43.0 // indirect
-	golang.org/x/sync v0.6.0 // indirect
+	github.com/swaggo/swag v1.16.2 // indirect
+	golang.org/x/sync v0.12.0 // indirect
 )
 
 require (
@@ -51,7 +52,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.16.0 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
-	github.com/golang-migrate/migrate/v4 v4.17.0
+	github.com/golang-migrate/migrate/v4 v4.18.3
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/hailocab/go-hostpool v0.0.0-20160125115350-e80d13ce29ed // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
@@ -93,19 +94,19 @@ require (
 	github.com/subosito/gotenv v1.6.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.12 // indirect
-	go.opentelemetry.io/otel v1.19.0 // indirect
-	go.opentelemetry.io/otel/trace v1.19.0 // indirect
+	go.opentelemetry.io/otel v1.29.0 // indirect
+	go.opentelemetry.io/otel/trace v1.29.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.27.0 // indirect
 	golang.org/x/arch v0.6.0 // indirect
-	golang.org/x/crypto v0.21.0 // indirect
+	golang.org/x/crypto v0.36.0 // indirect
 	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225 // indirect
-	golang.org/x/net v0.22.0 // indirect
-	golang.org/x/sys v0.18.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
-	golang.org/x/tools v0.18.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	golang.org/x/net v0.38.0 // indirect
+	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/text v0.23.0 // indirect
+	golang.org/x/tools v0.24.0 // indirect
+	google.golang.org/protobuf v1.34.2 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
