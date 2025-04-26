@@ -1,0 +1,26 @@
+# https://identity.foundation/didcomm-messaging/spec/#invitation
+
+### OOB invitation
+POST http://localhost:9090/admin/invitation
+Content-Type: application/json
+
+{
+  "Protocol": "nats",
+  "Topic": "didcomm",
+  "EventType": "invitation",
+  "Properties": {"greeting": "Hello, World!"},
+  "Group": "didcomm"
+}
+
+### Accept Invitation
+POST http://localhost:9090/admin/connections/accept
+Content-Type: application/json
+
+{
+  "Protocol": "nats",
+  "Topic": "didcomm",
+  "EventType": "invitation",
+  "Properties": {"greeting": "Hello, World!"},
+  "Group": "didcomm",
+  "Invitation": "https://cloud-wallet.xfsc.dev/api/didcomm?_oob=eyJpZCI6ImQxMmFhNTc2LWM0NGUtNDJmZC1iNTE3LWZkOGY0YmIwOTI5YiIsInR5cCI6ImFwcGxpY2F0aW9uL2RpZGNvbW0tcGxhaW4ranNvbiIsInR5cGUiOiJodHRwczovL2RpZGNvbW0ub3JnL291dC1vZi1iYW5kLzIuMC9pbnZpdGF0aW9uIiwiYm9keSI6eyJhY2NlcHQiOlsiZGlkY29tbS92MiJdLCJhdXRoIjoiZXlKaGJHY2lPaUpGWkVSVFFTSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmxlSEFpT2pFM01qY3pOVGt5TXpNc0ltbHVkbWwwWVhScGIyNUpaQ0k2SWpjNU1qQXdNMlZrTFRJM09XVXROREF3WkMxaVpEa3hMVFF4T0RjNVpHWXdZems0WlNKOS5qaUQ5WTFjdVNvWVpwcU5rbEotOG9kTXJaNV9rSndGMDFONnNHYUZpbFpuN2Vrd1l5NUNkdHF4bnlhcjBDcTB0UkZMcG40d1V6R3Z4UHBvZUxNbU9DQSIsImdvYWwiOiJSZXF1ZXN0TWVkaWF0ZSIsImdvYWxfY29kZSI6InJlcXVlc3QtbWVkaWF0ZSIsImxhYmVsIjoiQ2xvdWQgV2FsbGV0IE1lZGlhdG9yIn0sImZyb20iOiJkaWQ6cGVlcjoyLkV6NkxTZVJOUXo3WTJMbWdtb0VuemtmM1NBVlc4cXV6eHJpMmZ3czRZRmp0TmhldW0uVno2TWtyTGhabVBqSmI1aGE3YlJTYmVmSnJGa2R1YnVuS0RYNHdoeDk4ZUJnU0VFNy5TZXlKMElqb2laRzBpTENKeklqcDdJblZ5YVNJNkltaDBkSEJ6T2k4dlkyeHZkV1F0ZDJGc2JHVjBMbmhtYzJNdVpHVjJMMkZ3YVM5a2FXUmpiMjF0TDIxbGMzTmhaMlV2Y21WalpXbDJaU0lzSW1FaU9sc2laR2xrWTI5dGJTOTJNaUpkTENKeUlqcGJYWDE5In0"
+}

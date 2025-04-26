@@ -1,0 +1,54 @@
+// https://identity.foundation/didcomm-messaging/spec/#routing-protocol
+
+### forward to recipient did
+POST {{baseUrl}}{{didcommPath}}
+Content-Type: application/json
+
+{
+    "id": "123456789abcdefghi",
+    "type": "https://didcomm.org/routing/2.0/forward",
+    "body": {
+        "next": "{{recipient_did}}"
+    },
+    "from": "{{userPeerDid}}",
+    "to": [
+        "{{mediatorPeerDid}}"
+    ],
+    "created_time": 1706103201,
+    "expires_time": 1906103153,
+    "attachments": [
+        {
+            "id": "{{attachmentId}}",
+            "data": {
+                "base64": "{{bas64Attachement}}"
+            }
+        }
+    ]
+}
+
+### forward to some did 
+POST {{baseUrl}}{{didcommPath}}
+Content-Type: application/json
+
+{
+    "id": "123456789abcdefghi",
+    "type": "https://didcomm.org/routing/2.0/forward",
+    "body": {
+        "next": "{{someDid}}"
+    },
+    "from": "{{userPeerDid}}",
+    "to": [
+        "{{mediatorPeerDid}}"
+    ],
+    "created_time": 1706103201,
+    "expires_time": 1806103153,
+    "attachments": [
+        {
+            "id": "5",
+            "data": {
+                "base64": "{{bas64Attachement}}"
+            }
+        }
+    ]
+}
+

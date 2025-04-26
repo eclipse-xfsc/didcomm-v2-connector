@@ -1,0 +1,20 @@
+package protocol
+
+var (
+	PR_INTERNAL_SERVER_ERROR         = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_INTERNAL_ERROR}, "Internal server error")
+	PR_MESSAGE_NOT_UNPACKABLE        = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_MESSAGE}, "Message cannot be unpacked. Check attributes and format.")
+	PR_UNKNOWN_MESSAGE_TYPE          = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_MESSAGE}, "Unknown message type")
+	PR_NOT_MEDIATED                  = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_XFER}, "Client not registered for mediation")
+	PR_RETURN_ROUTE_ALL_MISSING      = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_MESSAGE}, "Return route all missing")
+	PR_RECIPIENT_REMOTE_DID_MISMATCH = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_REQUIREMENT}, "Recipient DID and remote DID do not belong together")
+	PR_REMOTE_DID_MESSAGE_MISMATCH   = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_REQUIREMENT}, "Message does not belong to remote DID")
+	PR_COULD_NOT_FORWARD_MESSAGE     = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_XFER}, "Could not forward message")
+	PR_NEXT_DENIED_MESSAGE           = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_XFER}, "Forwarded message was not accepted by the next recipient")
+	PR_EXPIRED_MESSAGE               = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_REQUIREMENT_TIME}, "Message has expired")
+	PR_MESSAGE_WRONG_CREATION_TIME   = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_REQUIREMENT_TIME}, "Message creation time is in the future")
+	PR_ALREADY_MEDIATED              = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_REQUIREMENT}, "DID is already mediated")
+	PR_ALREADY_CONNECTED             = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_REQUIREMENT}, "DID is already connected")
+	PR_INVALID_REQUEST               = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_REQUIREMENT}, "Invalid request")
+	PR_DID_BLOCKED                   = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_REQUIREMENT}, "DID is blocked")
+	PR_PROTOCOL_NOT_SUPPORTED        = NewProblemReport(PR_SORTER_ERROR, PR_SCOPE_MESSAGE, []string{PR_DESCRIPTOR_REQUIREMENT}, "Transportation Protocol not supported")
+)

@@ -1,0 +1,33 @@
+env: DEV # DEV, PROD
+logLevel: "info" # info, debug, warning, error
+label: My Mediator
+port: 9090
+url: "http://host.docker.internal:9090"
+tokenExpiration: 500000
+didcomm:
+  resolverUrl: "http://host.docker.internal:8081"
+  messageEncrypted: false
+
+# database
+db:
+  inMemory: false
+  host: "localhost"
+  port: 9042
+  user: "cassandra"
+  password: "cassandra"
+  keyspace: "dcc"
+  dbName: "cassandra"
+
+# config for cloudEventProdvider
+messaging:
+  protocol: "nats"
+  nats:
+    url: "nats://host.docker.internal:4222"
+    topic: "/message/receive"
+    queueGroup: logger # optional
+    timeoutInSec: 10 # optional
+
+  http:
+    url: "http://localhost:1111" # URL to send cloud event
+    port: 1111 # port to send cloud event
+    path: "xyz" # Path to receive cloud event

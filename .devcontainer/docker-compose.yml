@@ -1,0 +1,67 @@
+version : '3.9'
+
+networks:
+  test:
+    driver: bridge
+
+name: didcomm-devcontainer
+
+services:
+  devcontainer:
+    build:
+      context: ../.
+      dockerfile: ./.devcontainer/Dockerfile
+    volumes:
+      - ../..:/workspaces:cached
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    command: sleep infinity
+    networks:
+      - test
+
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+    networks:
+      - test
+
+  uni-resolver:
+    image: universalresolver/uni-resolver-web:latest
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: curl --fail http://uni-resolver:8080/1.0/testIdentifers || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      uniresolver_web_driver_url_did_jwk:  http://did-jwk-driver:8080
+      uniresolver_web_driver_url_did_peer: http://uni-resolver-driver-did-uport:8081
+      uniresolver_web_driver_url_did_web:  http://did-jwk-driver:8080
+    networks:
+      - test
+  uni-resolver-driver-did-uport:
+    image: uport/uni-resolver-driver-did-uport:4.3.0
+    ports:
+      - "8083:8081"
+    networks:
+      - test
+  did-jwk-driver:
+    image: transmute/restricted-resolver:latest
+    ports:
+      - "8134:8080"
+    networks:
+      - test
+
+  cassandra:
+    image: cassandra:4.1
+    ports:
+      - 9042:9042
+    networks:
+      - test
+    healthcheck:
+      test: cqlsh
+      interval: 30s
+      timeout: 120s
+      retries: 5

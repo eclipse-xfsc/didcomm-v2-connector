@@ -1,0 +1,24 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+didcommconnector
+__debug_bin*
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+tmp/
+
+# didcomm-rust lib is generated with make file
+didcomm/lib/
+
+# swagger auto generated files
+docs/*.*
+
+# logs
+logs

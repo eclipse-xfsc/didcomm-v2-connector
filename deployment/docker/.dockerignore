@@ -1,0 +1,16 @@
+# directories
+tmp/*
+.vscode/*
+database/*
+development/*
+helm/*
+
+# files
+README.md
+.air.toml
+.env
+app.env
+.gitmodules
+.gitignore
+didcomm-messages.http
+docker-compose.yaml

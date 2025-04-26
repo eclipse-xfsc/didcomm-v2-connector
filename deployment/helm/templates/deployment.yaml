@@ -1,0 +1,168 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ template "app.name" . }}"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "app.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "app.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "app.labels" . | nindent 8 }}
+      annotations:
+{{- if .Values.podAnnotations }}
+{{ toYaml .Values.podAnnotations | indent 8 }}
+{{- end }}
+    spec:
+      securityContext:
+      {{- include "app.securitycontext" . | nindent 8 }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.security | nindent 12 }}
+          image: "{{ .Values.image.repository }}/{{ .Values.image.name }}:{{ default .Chart.AppVersion .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }} 
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.service.port }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+              - name: config
+                mountPath: "/src/config.yaml"
+                subPath: config.yaml
+                readOnly: true
+      {{- if .Values.config }}    
+          env:
+            {{- if .Values.config.env }}    
+            - name:  "DIDCOMMCONNECTOR_ENV"
+              value:  {{ .Values.config.env }}
+            {{- end }}
+            {{- if .Values.config.logLevel }}    
+            - name:  "DIDCOMMCONNECTOR_LOGLEVEL"
+              value:  {{ .Values.config.logLevel }}
+            {{- end }}
+            {{- if .Values.config.label }}    
+            - name:  "DIDCOMMCONNECTOR_LABEL"
+              value:  {{ .Values.config.label }}
+            {{- end }}
+            {{- if .Values.config.port }}    
+            - name:  "DIDCOMMCONNECTOR_PORT"
+              value:  "{{ .Values.config.port }}"
+            {{- end }}
+            {{- if .Values.config.url }}    
+            - name:  "DIDCOMMCONNECTOR_URL"
+              value:  {{ .Values.config.url }}
+            {{- end }}
+               {{- if .Values.config.tokenExpiration }}    
+            - name:  "DIDCOMMCONNECTOR_TOKENEXPIRATION"
+              value:  "{{ .Values.config.tokenExpiration }}"
+            {{- end }}
+            {{- if .Values.config.didcomm }}
+            {{- if .Values.config.didcomm.resolverUrl }}      
+            - name:  "DIDCOMMCONNECTOR_DIDCOMM_RESOLVERURL"
+              value:  "{{ .Values.config.didcomm.resolverUrl }}"
+            {{- end }}
+            {{- if .Values.config.didcomm.messageEncrypted }}    
+            - name:  "DIDCOMMCONNECTOR_DIDCOMM_ISMESSAGEENCRYPTED"
+              value:  "{{ .Values.config.messageEncrypted }}"
+            {{- end }}
+            {{- end }}      
+            {{- if .Values.config.messaging }}   
+            {{- if .Values.config.messaging.protocol }}    
+            - name:  "DIDCOMMCONNECTOR_CLOUDFORWARDING_PROTOCOL"
+              value:  {{ .Values.config.messaging.protocol  }}
+            - name:  "CLOUDEVENTPROVIDER_MESSAGING_PROTOCOL"
+              value:  {{ .Values.config.messaging.protocol  }}        
+            {{- end }}
+            {{- if .Values.config.messaging.nats }} 
+            {{- if .Values.config.messaging.nats.url }}   
+            - name:  "DIDCOMMCONNECTOR_CLOUDFORWARDING_NATS_URL"
+              value:  {{ .Values.config.messaging.nats.url  }}
+            - name:  "CLOUDEVENTPROVIDER_MESSAGING_NATS_URL"
+              value:  {{ .Values.config.messaging.nats.url  }}  
+            {{- end }}
+            {{- if .Values.config.messaging.nats.topic }}    
+            - name:  "DIDCOMMCONNECTOR_CLOUDFORWARDING_NATS_TOPIC"
+              value:  {{ .Values.config.messaging.nats.topic }}
+            {{- end }}
+            {{- if .Values.config.messaging.nats.queueGroup }}    
+            - name:  "DIDCOMMCONNECTOR_CLOUDFORWARDING_NATS_QUEUEGROUP"
+              value:  {{ .Values.config.messaging.nats.queueGroup }}
+            {{- end }}
+            {{- if .Values.config.messaging.nats.timeoutInSec }}    
+            - name:  "CLOUDEVENTPROVIDER_MESSAGING_TIMEOUT"
+              value:  "{{ .Values.config.messaging.nats.timeoutInSec }}"
+            {{- end }}
+            {{- end }}
+            {{- end }}
+            {{- if .Values.config.database }}   
+            {{- if .Values.config.database.inMemory }}    
+            - name:  "DIDCOMMCONNECTOR_DATBASE_INMEMORY"
+              value:  "{{ .Values.config.database.inMemory }}"
+            {{- end }}
+            {{- if .Values.config.database.host }}    
+            - name:  "DIDCOMMCONNECTOR_DATBASE_HOST"
+              value:  {{ .Values.config.database.host }}
+            {{- end }}
+             {{- if .Values.config.database.port }}    
+            - name:  "DIDCOMMCONNECTOR_DATBASE_PORT"
+              value:  "{{ .Values.config.database.port }}"
+            {{- end }}
+            {{- if .Values.config.database.user }}    
+            - name:  "DIDCOMMCONNECTOR_DATBASE_USER"
+              value:  {{ .Values.config.database.user }}
+            {{- end }}
+            {{- if .Values.config.database.password }}    
+            - name:  "DIDCOMMCONNECTOR_DATBASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.database.password.passwordSecret }}
+                  key: {{ .Values.config.database.password.passwordKey }}
+
+            {{- end }}
+            {{- if .Values.config.database.keyspace }}    
+            - name:  "DIDCOMMCONNECTOR_DATBASE_KEYSPACE"
+              value:  {{ .Values.config.database.keyspace }}
+            {{- end }}
+               {{- if .Values.config.database.dbName }}    
+            - name:  "DIDCOMMCONNECTOR_DATBASE_DBNAME"
+              value:  {{ .Values.config.database.dbName }}
+            {{- end }}
+            {{- end }}
+      {{- end }}
+      volumes:
+         - name: config
+           configMap:
+              name: {{ include "app.fullname" . }}
+              optional: false
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

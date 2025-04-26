@@ -1,0 +1,124 @@
+@hostname=localhost
+@port=9090
+@path=/message/receive
+
+### DIDs
+@from=did:peer:2.Ez6LSmg6eZ5FdMcE8PPSMMBWXDvDPQ2weFhbTWjabmgeo3hQh.Vz6Mknr5Zt1YeLF6XpCchBSCrepSoaXpFV93TR5YyhnU3nu8A.SeyJ0IjoiZG0iLCJzIjp7InVyaSI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTA5MC9tZXNzYWdlL3JlY2VpdmUiLCJhIjpbImRpZGNvbW0vdjIiXSwiciI6W119fQ
+@to=did:peer:2.Ez6LSmg6eZ5FdMcE8PPSMMBWXDvDPQ2weFhbTWjabmgeo3hQh.Vz6Mknr5Zt1YeLF6XpCchBSCrepSoaXpFV93TR5YyhnU3nu8A.SeyJ0IjoiZG0iLCJzIjp7InVyaSI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTA5MC9tZXNzYWdlL3JlY2VpdmUiLCJhIjpbImRpZGNvbW0vdjIiXSwiciI6W119fQ
+
+### Message (Coordinate-Mediation): Mediation request
+POST http://{{hostname}}:{{port}}{{path}}
+Content-Type: application/json
+
+{
+    "id": "123456789abcdefghi",
+    "type": "https://didcomm.org/coordinate-mediation/3.0/mediate-request",
+    "body": {
+    },
+    "from": "{{from}}",
+    "to": [
+        "{{to}}"
+    ],
+    "created_time": 5,
+    "expires_time": 50,
+    "attachments": []
+}
+
+### Message (Coordinate-Mediation): recipient update add
+POST http://{{hostname}}:{{port}}{{path}}
+Content-Type: application/json
+
+{
+    "id": "123456789abcdefghi",
+    "type": "https://didcomm.org/coordinate-mediation/3.0/recipient-update",
+    "body": {
+        "updates":[
+        {
+            "recipient_did": "did:peer:alice_did_for_bob",
+            "action": "add"
+        }
+        ]
+    },
+    "from": "{{from}}",
+    "to": [
+        "{{to}}"
+    ],
+    "created_time": 5,
+    "expires_time": 50,
+    "attachments": []
+}
+
+### Message (Coordinate-Mediation): recipient update remove
+POST http://{{hostname}}:{{port}}{{path}}
+Content-Type: application/json
+
+{
+    "id": "123456789abcdefghi",
+    "type": "https://didcomm.org/coordinate-mediation/3.0/recipient-update",
+    "body": {
+        "updates":[
+        {
+            "recipient_did": "did:peer:alice_did_for_bob",
+            "action": "remove"
+        }
+        ]
+    },
+    "from": "{{from}}",
+    "to": [
+        "{{to}}"
+    ],
+    "created_time": 5,
+    "expires_time": 50,
+    "attachments": []
+}
+
+### Message (Coordinate-Mediation): recipient query
+POST http://{{hostname}}:{{port}}{{path}}
+Content-Type: application/json
+
+{
+    "id": "123456780",
+    "type": "https://didcomm.org/coordinate-mediation/3.0/recipient-query",
+    "body": {
+        "paginate": {
+            "limit": 30,
+            "offset": 0
+        }
+    },
+    "from": "{{from}}",
+    "to": [
+        "{{to}}"
+    ]
+}
+
+### Message (Trust-Ping): response requested : true
+POST http://{{hostname}}:{{port}}{{path}}
+Content-Type: application/json
+
+{
+  "type": "https://didcomm.org/trust-ping/2.0/ping",
+  "id": "123456789",
+  "from": "{{from}}",
+  "to": [
+        "{{to}}"
+    ],
+  "body": {
+      "response_requested": true
+  }
+}
+
+### Message (Trust-Ping): response requested : false
+POST http://{{hostname}}:{{port}}{{path}}
+Content-Type: application/json
+
+{
+  "type": "https://didcomm.org/trust-ping/2.0/ping",
+  "id": "123456789",
+  "from": "{{from}}",
+  "to": [
+        "{{to}}"
+    ],
+  "body": {
+      "response_requested": false
+  }
+}

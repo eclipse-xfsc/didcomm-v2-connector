@@ -1,0 +1,399 @@
+{
+	"info": {
+		"_postman_id": "6f34fd8e-a6dd-4ea0-b840-b707adfe0a63",
+		"name": "DIDComm Connector API",
+		"description": "This is a sample server celler server.\n\nContact Support:\n Name: API Support\n Email: email@todo.io",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29853368"
+	},
+	"item": [
+		{
+			"name": "Connection",
+			"item": [
+				{
+					"name": "Create a new connection",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"protocol\": \"nats\",\n    \"did\": \"{{userPeerDid}}\", \n    \"topic\": \"nats-topic-of-user\",\n    \"properties\": {\n        \"key\" : \"value\",\n        \"greeting\": \"hello-world\"\n    }\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/connections",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"connections"
+							]
+						},
+						"description": "Creates connection endpoint (more to be added)"
+					},
+					"response": [
+						{
+							"name": "Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/admin/connections/:did",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"connections",
+										":did"
+									],
+									"variable": [
+										{
+											"key": "did"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"<string>\",\n  \"testProperty\": \"<string>\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Invitation",
+			"item": [
+				{
+					"name": "Invitation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/invitation",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"message",
+								"invitation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mediation",
+			"item": [
+				{
+					"name": "Mediation Request",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"123456789abcdefghi\",\n    \"type\": \"https://didcomm.org/coordinate-mediation/3.0/mediate-request\",\n    \"body\": {\n    },\n    \"from\": \"{{userPeerDid}}\",\n    \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ],\n    \"created_time\": 5,\n    \"expires_time\": 50,\n    \"attachments\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipient Update: Add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"123456789abcdefghi\",\n    \"type\": \"https://didcomm.org/coordinate-mediation/3.0/recipient-update\",\n    \"body\": {\n        \"updates\":[\n        {\n            \"recipient_did\": \"did:peer:alice_did_for_bob\", \n            \"action\": \"add\"\n        },\n        {\n            \"recipient_did\": \"did:peer:bob_did_for_alice\", \n            \"action\": \"add\"\n        }\n        ]\n    },\n    \"from\": \"{{userPeerDid}}\",\n    \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ],\n    \"created_time\": 5,\n    \"expires_time\": 50,\n    \"attachments\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipient Update: Remove",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"123456789abcdefghi\",\n    \"type\": \"https://didcomm.org/coordinate-mediation/3.0/recipient-update\",\n    \"body\": {\n        \"updates\":[\n        {\n            \"recipient_did\": \"did:peer:alice_did_for_bob\", \n            \"action\": \"remove\"\n        },\n        {\n            \"recipient_did\": \"did:peer:bob_did_for_alice\", \n            \"action\": \"remove\"\n        }\n        ]\n    },\n    \"from\": \"{{userPeerDid}}\",\n    \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ],\n    \"created_time\": 5,\n    \"expires_time\": 50,\n    \"attachments\": []\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recipient Update: Query",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"123456780\",\n    \"type\": \"https://didcomm.org/coordinate-mediation/3.0/recipient-query\",\n    \"body\": {\n        \"paginate\": {\n            \"limit\": 30,\n            \"offset\": 0\n        }\n    },\n    \"from\": \"{{userPeerDid}}\",\n    \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Routing",
+			"item": [
+				{
+					"name": "Forward to Recipient ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"123456789abcdefghi\",\n    \"type\": \"https://didcomm.org/routing/2.0/forward\",\n    \"body\": {\n        \"next\": \"did:peer:bob_did_for_alice\"\n    },\n    \"from\": \"{{userPeerDid}}\",\n    \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ],\n    \"created_time\": 1706103201,\n    \"expires_time\": 1906103153,\n    \"attachments\": [\n        {\n            \"id\": \"{{attachmentId}}\",\n            \"data\": {\n                \"base64\": \"{{bas64Attachement}}\"\n            }\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Message Pickup",
+			"item": [
+				{
+					"name": "Status request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"123456780\",\n    \"type\": \"https://didcomm.org/messagepickup/3.0/status-request\",\n    \"body\": {\n        \"recipient_did\": \"did:peer:bob_did_for_alice\"\n    },\n    \"return_route\": \"all\",\n    \"from\": \"{{userPeerDid}}\",\n    \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delivery Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"123456780\",\n    \"type\": \"https://didcomm.org/messagepickup/3.0/delivery-request\",\n    \"body\": {\n        \"limit\": 10,\n        \"recipient_did\": \"did:peer:bob_did_for_alice\"\n    },\n    \"return_route\": \"all\",\n    \"from\": \"{{userPeerDid}}\",\n    \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Message Received",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"123456780\",\n    \"type\": \"https://didcomm.org/messagepickup/3.0/messages-received\",\n    \"body\": {\n        \"message_id_list\": [\"{{attachmentId}}\"]\n    },\n    \"return_route\": \"all\",\n    \"from\": \"{{userPeerDid}}\",\n    \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trusting (ping)",
+			"item": [
+				{
+					"name": "Trust Ping (true)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"https://didcomm.org/trust-ping/2.0/ping\",\n  \"id\": \"123456789\",\n  \"from\": \"{{userPeerDid}}\",\n  \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ],\n  \"body\": {\n      \"response_requested\": true\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Trust Ping (false)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"type\": \"https://didcomm.org/trust-ping/2.0/ping\",\n  \"id\": \"123456789\",\n  \"from\": \"{{userPeerDid}}\",\n  \"to\": [\n        \"{{mediatorPeerDid}}\"\n    ],\n  \"body\": {\n      \"response_requested\": false\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/{{didcommPath}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"{{didcommPath}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "//localhost:9090"
+		}
+	]
+}

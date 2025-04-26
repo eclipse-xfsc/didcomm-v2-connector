@@ -1,0 +1,36 @@
+
+### Get Connections
+GET {{baseUrl}}/admin/connections
+
+### Get Connection Information
+GET {{baseUrl}}/admin/connections/{{userPeerDid}}
+
+### Create Connection
+POST {{baseUrl}}/admin/connections
+Content-Type: application/json
+
+{
+    "protocol": "nats",
+    "remoteDid": "{{userPeerDid}}",
+    "topic": "nats-topic-of-user",
+    "properties": {
+        "key" : "value",
+        "greeting": "hello-world"
+    }
+}
+
+### Delete Connection
+DELETE  {{baseUrl}}/admin/connections/{{userPeerDid}}
+
+### Block Connection
+POST  {{baseUrl}}/admin/connections/block/{{userPeerDid}}
+
+### Unblock Connection
+POST  {{baseUrl}}/admin/connections/unblock/{{userPeerDid}}
+
+### Status (blocked or not)
+GET  {{baseUrl}}/admin/connections/isblocked/{{userPeerDid}}
+
+
+
+

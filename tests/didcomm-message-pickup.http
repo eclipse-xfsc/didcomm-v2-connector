@@ -1,0 +1,53 @@
+# https://didcomm.org/messagepickup/3.0/
+
+### status request
+POST {{baseUrl}}{{didcommPath}}
+Content-Type: application/json
+
+{
+    "id": "123456780",
+    "type": "https://didcomm.org/messagepickup/3.0/status-request",
+    "body": {
+        "recipient_did": "{{recipient_did}}"
+    },
+    "return_route": "all",
+    "from": "{{userPeerDid}}",
+    "to": [
+        "{{mediatorPeerDid}}"
+    ]
+}
+
+### delivery request
+POST {{baseUrl}}{{didcommPath}}
+Content-Type: application/json
+
+{
+    "id": "123456780",
+    "type": "https://didcomm.org/messagepickup/3.0/delivery-request",
+    "body": {
+        "limit": 10,
+        "recipient_did": "{{recipient_did}}"
+    },
+    "return_route": "all",
+    "from": "{{userPeerDid}}",
+    "to": [
+        "{{mediatorPeerDid}}"
+    ]
+}
+
+### message received
+POST {{baseUrl}}{{didcommPath}}
+Content-Type: application/json
+
+{
+    "id": "123456780",
+    "type": "https://didcomm.org/messagepickup/3.0/messages-received",
+    "body": {
+        "message_id_list": ["{{attachmentId}}"]
+    },
+    "return_route": "all",
+    "from": "{{userPeerDid}}",
+    "to": [
+        "{{mediatorPeerDid}}"
+    ]
+}

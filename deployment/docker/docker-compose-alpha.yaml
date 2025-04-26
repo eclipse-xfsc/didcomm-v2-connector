@@ -1,0 +1,72 @@
+version: "3"
+
+networks:
+  test:
+    name: test_network
+    external:
+      true
+  
+services: 
+  didcomconnectorAlpha:
+    image: node-654e3bca7fbeeed18f81d7c7.ps-xaas.io/common-services/didcomm-connector:refactoring
+    container_name: dccAlpha
+    depends_on:
+        uni-resolverAlpha:
+           condition: service_healthy
+        cassandraAlpha:
+           condition: service_healthy
+  
+    ports:
+      - 9092:8080
+    environment:
+        - DIDCOMMCONNECTOR_DIDCOMM_RESOLVERURL=http://uni-resolverAlpha:8081
+        - DIDCOMMCONNECTOR_CLOUDFORWARDING_NATS_URL=nats://natsAlpha:4222
+        - DIDCOMMCONNECTOR_DATBASE_HOST=cassandraAlpha
+        - DIDCOMMCONNECTOR_DATBASE_KEYSPACE=tenant_space
+        - DIDCOMMCONNECTOR_DATBASE_DBNAME=dcc
+        - DIDCOMMCONNECTOR_DATBASE_PORT=9042
+        - DIDCOMMCONNECTOR_CLOUDFORWARDING_NATS_TOPIC=connector
+        - DIDCOMMCONNECTOR_URL=http://localhost:9092
+        - DIDCOMMCONNECTOR_CLOUDFORWARDING_PROTOCOL=nats
+    networks: 
+      - test
+
+
+  natsAlpha:
+    image: nats:latest
+    container_name: natsAlpha
+    ports:
+      - "4223:4222"
+    networks: 
+      - test
+
+  uni-resolverAlpha:
+    image: universalresolver/uni-resolver-web:latest
+    container_name: uni-resolverAlpha
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: curl --fail http://uni-resolver:8080/1.0/testIdentifers || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+       uniresolver_web_driver_url_did_jwk:  http://did-jwk-driver:8080
+       uniresolver_web_driver_url_did_peer: http://uni-resolver-driver-did-uport:8081
+       uniresolver_web_driver_url_did_web:  http://did-jwk-driver:8080
+    networks: 
+      - test
+
+  cassandraAlpha:
+    image: cassandra:4.1
+    container_name: cassandra_dbAlpha
+    ports:
+      - 7001:7000
+      - 9043:9042
+    networks: 
+      - test
+    healthcheck:
+      test: cqlsh 
+      interval: 30s
+      timeout: 120s
+      retries: 5

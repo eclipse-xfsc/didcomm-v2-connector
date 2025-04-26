@@ -1,0 +1,4 @@
+[submodule "didcomm-rust"]
+	path = didcomm-rust
+	url = https://github.com/esatus/didcomm-rust
+	ignore = dirty

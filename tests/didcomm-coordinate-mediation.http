@@ -1,0 +1,86 @@
+# https://didcomm.org/coordinate-mediation/3.0/
+
+### Mediation request
+POST {{baseUrl}}{{didcommPath}}
+Content-Type: application/json
+
+{
+    "id": "123456789abcdefghi",
+    "type": "https://didcomm.org/coordinate-mediation/3.0/mediate-request",
+    "body": {
+    },
+    "from": "{{userPeerDid}}",
+    "to": [
+        "{{mediatorPeerDid}}"
+    ],
+    "created_time": 5,
+    "expires_time": 50,
+    "attachments": []
+}
+
+### recipient update: add
+POST {{baseUrl}}{{didcommPath}}
+Content-Type: application/json
+
+{
+    "id": "123456789abcdefghi",
+    "type": "https://didcomm.org/coordinate-mediation/3.0/recipient-update",
+    "body": {
+        "updates":[
+        {
+            "recipient_did": "did:peer:alice_did_for_bob",
+            "action": "add"
+        }
+        ]
+    },
+    "from": "{{userPeerDid}}",
+    "to": [
+        "{{mediatorPeerDid}}"
+    ],
+    "created_time": 5,
+    "expires_time": 50,
+    "attachments": []
+}
+
+### recipient update: remove
+POST {{baseUrl}}{{didcommPath}}
+Content-Type: application/json
+
+{
+    "id": "123456789abcdefghi",
+    "type": "https://didcomm.org/coordinate-mediation/3.0/recipient-update",
+    "body": {
+        "updates":[
+        {
+            "recipient_did": "did:peer:alice_did_for_bob",
+            "action": "remove"
+        }
+        ]
+    },
+    "from": "{{userPeerDid}}",
+    "to": [
+        "{{mediatorPeerDid}}"
+    ],
+    "created_time": 5,
+    "expires_time": 50,
+    "attachments": []
+}
+
+### recipient query
+POST {{baseUrl}}{{didcommPath}}
+Content-Type: application/json
+
+{
+    "id": "123456780",
+    "type": "https://didcomm.org/coordinate-mediation/3.0/recipient-query",
+    "body": {
+        "paginate": {
+            "limit": 30,
+            "offset": 0
+        }
+    },
+    "from": "{{userPeerDid}}",
+    "to": [
+        "{{mediatorPeerDid}}"
+    ]
+}

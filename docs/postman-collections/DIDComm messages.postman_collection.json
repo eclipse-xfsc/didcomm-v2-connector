@@ -1,0 +1,392 @@
+{
+	"info": {
+		"_postman_id": "f16e77d4-b120-45df-a0be-69d1d7f323f8",
+		"name": "DIDComm messages",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31304958",
+		"_collection_link": "https://gold-desert-741808.postman.co/workspace/DIDCommConnector~533b4501-2931-4e5a-9b9c-3ff231791bbf/collection/31304958-f16e77d4-b120-45df-a0be-69d1d7f323f8?action=share&source=collection_link&creator=31304958"
+	},
+	"item": [
+		{
+			"name": "receiveMsg mediation-request",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/didcomm-encrypted+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456789abcdefghi\",\r\n    \"type\": \"https://didcomm.org/coordinate-mediation/3.0/mediate-request\",\r\n    \"body\": {\r\n    },\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ],\r\n    \"attachments\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive/",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "routing forward",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/didcomm-encrypted+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456789abcdefghi\",\r\n    \"type\": \"https://didcomm.org/routing/2.0/forward\",\r\n    \"body\": {\r\n        \"next\": {{recipient_did}}\r\n    },\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ],\r\n    \"created_time\": 1706103201,\r\n    \"expires_time\": 1806103153,\r\n    \"attachments\": [\r\n        {\r\n            \"id\": \"5\",\r\n            \"data\": {\r\n                \"base64\": \"ewogICJpZCI6ICIxMjM0NTY3ODlhYmNkZWZnaGkiLAogICJ0eXBlIjogImh0dHBzOi8vZGlkY29tbS5vcmcvYmFzaWNtZXNzYWdlLzIuMC9tZXNzYWdlIiwKICAiYm9keSI6IHsKICAgICJjb250ZW50IjogIllvdXIgaG92ZXJjcmFmdCBpcyBmdWxsIG9mIGVlbHMuIgogIH0sCiAgImZyb20iOiAie3tmcm9tfX0iLAogICJ0byI6IFsKICAgICJ7e3RvfX0iCiAgXSwKICAiY3JlYXRlZF90aW1lIjogNSwKICAiZXhwaXJlc190aW1lIjogNTAsCiAgImF0dGFjaG1lbnRzIjogW10KfQ==\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive/",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "routing outbox",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/didcomm-encrypted+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456789abcdefghi\",\r\n    \"type\": \"https://didcomm.org/routing/2.0/forward\",\r\n    \"body\": {\r\n        \"next\": {{bob}}\r\n    },\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ],\r\n    \"created_time\": 1706861677,\r\n    \"expires_time\": 1806861677,\r\n    \"attachments\": [\r\n        {\r\n            \"id\": \"5\",\r\n            \"data\": {\r\n                \"base64\": \"ICAgICAgICB7CiAgICAgICAgICAgICAgICAiaWQiOiAiMTIzNDU2Nzg5YWJjZGVmZ2hpIiwKICAgICAgICAgICAgICAgICJ0eXBlIjogImh0dHBzOi8vZGlkY29tbS5vcmcvYmFzaWNtZXNzYWdlLzIuMC9tZXNzYWdlIiwKICAgICAgICAgICAgICAgICJib2R5IjogewogICAgICAgICAgICAgICAgICAgICJjb250ZW50IjogIllvdXIgaG92ZXJjcmFmdCBpcyBmdWxsIG9mIGVlbHMuIgogICAgICAgICAgICAgICAgfSwKICAgICAgICAgICAgICAgICJmcm9tIjoge3tmcm9tfX0sCiAgICAgICAgICAgICAgICAidG8iOiBbCiAgICAgICAgICAgICAgICAgICAge3t0b319CiAgICAgICAgICAgICAgICBdLAogICAgICAgICAgICAgICAgImNyZWF0ZWRfdGltZSI6IDUsCiAgICAgICAgICAgICAgICAiZXhwaXJlc190aW1lIjogNTAsCiAgICAgICAgICAgICAgICAiYXR0YWNobWVudHMiOiBbXQogICAgICAgICAgICB9\"\r\n            }\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive/",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invitation",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/didcomm-encrypted+json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:9090/admin/invitation/",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"admin",
+						"invitation",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "receiveMsg recipient update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456789abcdefghi\",\r\n    \"type\": \"https://didcomm.org/coordinate-mediation/3.0/recipient-update\",\r\n    \"body\": {\r\n        \"updates\":[\r\n        {\r\n            \"recipient_did\": {{recipient_did}},\r\n            \"action\": \"add\"\r\n        }\r\n        ]\r\n    },\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ],\r\n    \"attachments\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "receiveMsg recipient query",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456780\",\r\n    \"type\": \"https://didcomm.org/coordinate-mediation/3.0/recipient-query\",\r\n    \"body\": {\r\n        \"paginate\": {\r\n            \"limit\": 30,\r\n            \"offset\": 0\r\n        }\r\n    },\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "messagePickup status-request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456780\",\r\n    \"type\": \"https://didcomm.org/messagepickup/3.0/status-request\",\r\n    \"body\": {\r\n        \"recipient_did\": {{recipient_did}}\r\n    },\r\n    \"return_route\": \"all\",\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "messagePickup delivery-request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456780\",\r\n    \"type\": \"https://didcomm.org/messagepickup/3.0/delivery-request\",\r\n    \"body\": {\r\n        \"limit\": 10,\r\n        \"recipient_did\": {{recipient_did}}\r\n    },\r\n    \"return_route\": \"all\",\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "messagePickup messages-received",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456780\",\r\n    \"type\": \"https://didcomm.org/messagepickup/3.0/messages-received\",\r\n    \"body\": {\r\n        \"message_id_list\": [\"5\"]\r\n    },\r\n    \"return_route\": \"all\",\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "messagePickup live-delivery-change",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456780\",\r\n    \"type\": \"https://didcomm.org/messagepickup/3.0/messages-received\",\r\n    \"body\": {\r\n        \"recipient_did\": {{from}}\r\n    },\r\n    \"return_route\": \"all\",\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "trustping response false",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456789\",\r\n    \"type\": \"https://didcomm.org/trust-ping/2.0/ping\",\r\n    \"body\": {\r\n      \"response_requested\": false\r\n    },\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/message/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"message",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "trustping response true",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"123456789\",\r\n    \"type\": \"https://didcomm.org/trust-ping/2.0/ping\",\r\n    \"body\": {\r\n      \"response_requested\": true\r\n    },\r\n    \"from\": {{from}},\r\n    \"to\": [\r\n        {{to}}\r\n    ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9999/message/receive",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"message",
+						"receive"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
