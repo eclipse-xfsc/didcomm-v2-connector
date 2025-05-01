@@ -1,7 +1,6 @@
 package main
 
 import (
-	_ "github.com/eclipse-xfsc/didcomm-v2-connector/docs"
 	"github.com/eclipse-xfsc/didcomm-v2-connector/internal/config"
 
 	"github.com/gin-gonic/gin"
