@@ -13,14 +13,14 @@ require (
 	github.com/multiformats/go-multibase v0.2.0
 	github.com/samber/slog-gin v1.9.0
 	github.com/spf13/viper v1.18.2
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.10.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/gin-swagger v1.6.0
-	github.com/swaggo/swag v1.16.2
 )
 
 require (
 	github.com/IBM/sarama v1.43.0 // indirect
+	github.com/swaggo/swag v1.16.2 // indirect
 	golang.org/x/sync v0.6.0 // indirect
 )
 
